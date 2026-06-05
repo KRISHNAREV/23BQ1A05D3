@@ -57,7 +57,10 @@ const totalPages = Math.ceil(
 
   return (
   <div className="container">
-    <h1>Campus Notifications</h1>
+    <h1>Top Notifications Dashboard</h1>
+    <p>
+  Total Notifications: {filteredNotifications.length}
+</p>
 
     <select
   value={filter}
