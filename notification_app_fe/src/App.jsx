@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+
 function App() {
   const notifications = [
     {
@@ -35,77 +36,74 @@ function App() {
   ];
 
   const [filter, setFilter] = useState("All");
-const [page, setPage] = useState(1);
+  const [page, setPage] = useState(1);
 
-const itemsPerPage = 2;
+  const itemsPerPage = 2;
 
   const filteredNotifications =
     filter === "All"
       ? notifications
       : notifications.filter((n) => n.Type === filter);
-      const startIndex = (page - 1) * itemsPerPage;
 
-const paginatedNotifications =
-  filteredNotifications.slice(
+  const startIndex = (page - 1) * itemsPerPage;
+
+  const paginatedNotifications = filteredNotifications.slice(
     startIndex,
     startIndex + itemsPerPage
   );
 
-const totalPages = Math.ceil(
-  filteredNotifications.length / itemsPerPage
-);
+  const totalPages = Math.ceil(
+    filteredNotifications.length / itemsPerPage
+  );
 
   return (
-  <div className="container">
-    <h1>Top Notifications Dashboard</h1>
-    <p>
-  Total Notifications: {filteredNotifications.length}
-</p>
+    <div className="container">
+      <h1>Top Notifications Dashboard</h1>
 
-    <select
-  value={filter}
-  onChange={(e) => {
-    setFilter(e.target.value);
-    setPage(1);
-  }}
->
-      <option>All</option>
-      <option>Placement</option>
-      <option>Result</option>
-      <option>Event</option>
-    </select>
+      <p>Total Notifications: {filteredNotifications.length}</p>
 
-    {paginatedNotifications.map((item) => (
-      <div key={item.ID} className="card">
-        <h3>{item.Type}</h3>
-        <p>{item.Message}</p>
-        <small>{item.Timestamp}</small>
+      <select
+        value={filter}
+        onChange={(e) => {
+          setFilter(e.target.value);
+          setPage(1);
+        }}
+      >
+        <option>All</option>
+        <option>Placement</option>
+        <option>Result</option>
+        <option>Event</option>
+      </select>
+
+      {paginatedNotifications.map((item) => (
+        <div key={item.ID} className="card">
+          <h3>{item.Type}</h3>
+          <p>{item.Message}</p>
+          <small>{item.Timestamp}</small>
+        </div>
+      ))}
+
+      <div style={{ marginTop: "20px" }}>
+        <button
+          disabled={page === 1}
+          onClick={() => setPage(page - 1)}
+        >
+          Previous
+        </button>
+
+        <span style={{ margin: "10px" }}>
+          Page {page} of {totalPages}
+        </span>
+
+        <button
+          disabled={page === totalPages}
+          onClick={() => setPage(page + 1)}
+        >
+          Next
+        </button>
       </div>
-    ))}
-
-    {/* ADD STEP 6 HERE */}
-    <div style={{ marginTop: "20px" }}>
-      <button
-        disabled={page === 1}
-        onClick={() => setPage(page - 1)}
-      >
-        Previous
-      </button>
-
-      <span style={{ margin: "10px" }}>
-        Page {page} of {totalPages}
-      </span>
-
-      <button
-        disabled={page === totalPages}
-        onClick={() => setPage(page + 1)}
-      >
-        Next
-      </button>
     </div>
-
-  </div>
-);
+  );
 }
 
 export default App;
